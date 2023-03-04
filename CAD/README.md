@@ -17,6 +17,6 @@ Here are the details of our next CAD workshop:
 
 Using a mouse is essential when using CAD software, so make sure to bring one! The workshop will also be fully catered.
 ## Post-Workshop Resources
-After the workshop, if you want you can refer to the source files of the project [here](Phone Project). Our slide deck will also be added to this folder.
-Look out for more information on future workshops. We also aim to produce more resources in the future to keep growing your CAD skills. Stay tuned on this page for any updates.
-If you need any assistance when it comes to CAD, you can join the UQ MARS discord [here](https://discord.gg/AaGMcpNT). We will be more than happy to help out!
+1. After the workshop, if you want you can refer to the source files of the project [here](Phone Project). Our slide deck will also be added to this folder.
+2. Look out for more information on future workshops. We also aim to produce more resources in the future to keep growing your CAD skills. Stay tuned on this page for any updates.
+3. If you need any assistance when it comes to CAD, you can join the UQ MARS discord [here](https://discord.gg/AaGMcpNT). We will be more than happy to help out!
