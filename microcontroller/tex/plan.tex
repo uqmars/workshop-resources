@@ -13,6 +13,10 @@
 \usepackage[margin=20mm]{geometry}
 \usepackage{subfig}
 \usepackage{xcolor}
+
+\usepackage{graphicx}
+\usepackage{float}
+
 \usepackage{hyperref}
 \hypersetup{
     colorlinks=true,
@@ -37,6 +41,7 @@
 \urlstyle{same}
 
 \definecolor{turbo_purple}{RGB}{112,105,160}
+
 
 \usepackage{titlesec}
 \titleformat{\section}[block]{\normalfont\huge\bfseries\centering}{}{1em}{}
@@ -143,12 +148,29 @@ Introduce the IDE what the power it offers. Such as Serial Monitor ...\\
 Introduce basics of setup and block loop {}\\
 
 \subsection*{Simple Blink LED}
-Equivalent of Hello World! in the embedded world. Teaches how to output to certain PINS.
+Blinking an LED is the equivalent to hello world in the embedded world. The figure below shows how the LED can be wired to a GPIO pin. 
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{led.png}
+  \caption{LED Wiring}
+  \label{fig:led}
+\end{figure}
 \subsection*{Button Input to turn on LED}
 Teaches students how to handle input.
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale = 0.3]{button.png}
+  \caption{Button Wiring}
+  \label{fig:button}
+\end{figure}
 \subsection*{PWM}
 PWM for things such as motors and SG90 servos.
-
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale = 0.3]{servo.png}
+  \caption{Servo wiring}
+  \label{fig:servo}
+\end{figure}
 \section*{Advanced Lessons}
 \subsection*{Wireless Communication}
 Wireless communication is essential for remotely operated devices/robotics. 
@@ -160,14 +182,6 @@ Alternatively, many groups use a long USB cable to remotely operate their
 machine - yuck. After this tutorial you will hopefully gain the confidence to blah blah....
 
 \section*{How to program Microcontroller with C}
-\subsection*{Header files}
-Microcontroller dependent headerfiles, need to emphasise importance of reading documentation properly
-as each microcontroller can have small variations.
-\subsection*{Makefile}
-Having a makefile is crucial allowing us to use a cross-compiler to compile code onto chip.
-Documentation may provide a template makefile
+https://docs.espressif.com/projects/esp-idf/en/latest/esp32/
 
-\subsection*{Interrupt}
-Teaches students not to use busy waits as it can chew up a lot of processor cycles for no reason.
 \end{document}
-
