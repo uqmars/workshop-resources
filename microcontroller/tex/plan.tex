@@ -130,16 +130,17 @@ node [inner sep=0,outer sep=0,above right]
     \end{itemize}
 \end{itemize}
 
-\textcolor{red}{ATmega328P - Can be used for courses such as ENGG1100\\ (I think it was banned for METR2800 and METR4810?? just the 328P though)
-STM32 - Used in CSSE3010, ENGG2800\\
-???? (Any others you can think of?)}
-
-
+\subsection*{How to choose your board} 
+The best way to choose the board that suits you is to fully analyse what you need the board for. Knowing your use case will allow you put constraints on various factors such as cost, size, number of GPIO pins, power usage, memory ..
 
 \section*{Basic Microcontroller Programming - Intro to the Arduino IDE}
 
-\textcolor{red}{Pretty basic I think we can just provide some
-sort of resource they can look at in their own time}
+\subsection*{Introduction to IDE}
+Installing Arduino IDE from website.\\
+Checking whether you can find your board - Install CP2102 USB to UART Bridge Driver\\
+Adding the ESP32 Add-on to the Arduino IDE\\
+Introduce the IDE what the power it offers. Such as Serial Monitor ...\\
+Introduce basics of setup and block loop {}\\
 
 \subsection*{Simple Blink LED}
 Equivalent of Hello World! in the embedded world. Teaches how to output to certain PINS.
@@ -148,14 +149,13 @@ Teaches students how to handle input.
 \subsection*{PWM}
 PWM for things such as motors and SG90 servos.
 
-
 \section*{Advanced Lessons}
-
 \subsection*{Wireless Communication}
 Wireless communication is essential for remotely operated devices/robotics. 
 Although not required, you are usually encouraged to use wireless 
 communication in the ENGG1100 and METR2800 group projects.
 % Ill need a fact check here cause I didn't do METR2800
+% I did not need wireless for METR2800 pretty sure.
 Alternatively, many groups use a long USB cable to remotely operate their 
 machine - yuck. After this tutorial you will hopefully gain the confidence to blah blah....
 
@@ -170,3 +170,4 @@ Documentation may provide a template makefile
 \subsection*{Interrupt}
 Teaches students not to use busy waits as it can chew up a lot of processor cycles for no reason.
 \end{document}
+
