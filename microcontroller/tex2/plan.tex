@@ -69,6 +69,35 @@ node [inner sep=0,outer sep=0,above right]
 \end{titlepage}
 \restoregeometry
 
+
+\section*{Thank you to our partners!}
+\begin{figure}[!htbp]
+    \centering
+    \caption*{Turbo Sponsors}%
+    \subfloat{{\includegraphics[width=7.5cm]{Assets/BPEQ-Logo-Web.png} }}%
+    \qquad
+    \subfloat{{\includegraphics[width=7.5cm]{Assets/black_corematic_logo_inline_expertises.png} }}%
+    \qquad
+    \subfloat{{\includegraphics[width=7.5cm]{Assets/JAY-0002-Brand-Identity-Evolution-Logo_Full-Colour-RGB.png} }}%
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \caption*{Gold Sponsors}%
+    \subfloat{{\includegraphics[width=5.5cm]{Assets/ACS-RCL_Logo-Colour.png} }}%
+    \qquad
+    \subfloat{{\includegraphics[width=5.5cm]{Assets/chelona.png} }}%
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \caption*{Silver Sponsors}%
+    \subfloat{{\includegraphics[width=3cm]{Assets/EA_logo_Flat_CMYK.png} }}%
+\end{figure}
+
+% \pagebreak
+\newpage
+
 \section*{Required Software}
 The required software for these tutorials is Arduino IDE. To download the software, go through the following steps:
     \begin{enumerate}
@@ -105,6 +134,51 @@ The required software for these tutorials is Arduino IDE. To download the softwa
 
 
 \newpage
+
+\section*{What Is A Microcontroller}
+
+    A microcontroller is a small computer on a single chip that controls some or all of the 
+    functions of an electronic device or system. It has a processor, memory and input/output 
+    peripherals. Microcontrollers are used in many devices, such as cars, robots, home appliances
+    and medical devices. \\
+
+
+    Microcontrollers usually have features such as:
+
+    \begin{itemize}
+        \item A central processing unit (CPU) that performs arithmetic, logic and I/O operations
+        \item Volatile memory (RAM) for data storage
+        \item Non-volatile memory (ROM, EPROM, EEPROM or Flash) for program and operating parameter storage
+        \item Discrete input and output bits that allow control or detection of individual pins
+        \item Serial input/output ports (UARTs) that enable communication with other devices
+        \item Other peripherals such as timers, counters, analog-to-digital converters, etc.
+    \end{itemize}
+    
+
+\section*{Hobby Microcontroller Options}
+    \begin{itemize}
+        \item Arduino Family
+        \begin{itemize}
+            \item Arduino Uno (ATmega328P)
+            \item Arduino Mega (ATmega2560)
+            \item Ardiono Nano (ATmega328P)
+        \end{itemize}
+        \item Raspberry Pi Family 
+        \begin{itemize}
+            \item Raspberry Pi Model B
+            \item Raspberry Pi Zero
+            \item Raspberry Pi Pico
+        \end{itemize}
+        \item Espressif Family
+        \begin{itemize}
+            \item ESP8266 Development Boards
+            \item ESP32 Development Boards
+        \end{itemize}
+    \end{itemize}
+
+\newpage
+
+
 
 \section*{Overview of the Arduino and ESP32}
     \begin{center}
@@ -265,76 +339,82 @@ The required software for these tutorials is Arduino IDE. To download the softwa
 
 \newpage
 
-\section*{Lesson 3: Dimming an LED}
+\section*{Lesson 3: PWM Servo Motor Control}
     \subsection*{What You'll Need:}
             \begin{itemize}
                 \item Arduino/ESP32
-                \item LED
+                \item Servo Motor
+                \item LED \& Pushbutton
                 \item Breadboard
-                \item Potentiometer
                 \item 5 wires (male to male)
             \end{itemize}
         \begin{mdframed}[linewidth = 3, linecolor = turbo_purple]
-            \textbf{LED:}
+            \textbf{Servo Motor:}
             \\
-            Potentiometers are a sort of variable resistor. They are a sensory input for the Arduino that gives a value between 0 and 1024 depending on how far the knob is twisted. Note that the signal must be used by an analog port. The VCC and GND ports are interchangeable however the signal must always be in the middle. \\
-            \includegraphics[scale = 1]{Assets/pot.png}
+            A servo motor is a type of motor that can control its position, speed and torque precisely 
+            with feedback from a sensor and a controller. It is used for applications that require accurate 
+            and dynamic movements, such as robotics, CNC machinery and automated manufacturing. A servo motor 
+            consists of a suitable motor, a sensor for position feedback and a controller that interprets the 
+            input signal and adjusts the motor accordingly.            
+            The servo motors used in this workshop are controlled using a PWM signal.
+            \\
+            \includegraphics[scale = 1]{Assets/servos.png}
         \end{mdframed}
     \subsection*{Wiring Diagram:}
     \includegraphics[width = \diagramWidth]{Assets/arduino_esp_pot.png}
-\newpage
-\subsection*{Directions:}
-\begin{center}
-    \begin{tabularx}{\textwidth} { 
-        | >{\raggedright\arraybackslash}X 
-        | >{\raggedright\arraybackslash}X | }
-        \hline
-        \multicolumn{1}{|c|}{\textbf{Arduino}} & 
-        \multicolumn{1}{|c|}{\textbf{ESP32}} \\
-        \hline
-        \begin{enumerate}
-            \item Plug in the LED and potentiometer into the breadboard.
-            \item Connect a GND wire to the right side of the potentiometer and a 5V wire to the left side
-            \item Connect a wire from port A0 to the middle pin on the potentiometer
-            \item Connect a GND wire and a wire from port 9 correctly to the LED
-        \end{enumerate} &
-        \begin{enumerate}
-            \item Plug in the LED to port G23 and plug the potentiometer into the breadboard
-            \item Connect a GND wire to the left side of the potentiometer and a 5V wire to the right side
-            \item Connect a wire from port G12 to the middle pin on the potentiometer
-        \end{enumerate} \\
-        \hline
-    \end{tabularx}
-\end{center}
-\subsection*{Code (Serial Feedback):}
-    \begin{mdframed}[linewidth = 3, linecolor = turbo_purple]
-        \includegraphics[height = \codeHeight]{Assets/begin.png} \\
-         Starts serial communication with the computer \\ \\
-         \includegraphics[height = 14mm]{Assets/serial.png} \\ 
-         Displays the specified input to the monitor. Using ‘println’ creates a new line of text.
-    \end{mdframed}
+    \newpage
+    \subsection*{Directions:}
+    \begin{center}
+        \begin{tabularx}{\textwidth} { 
+            | >{\raggedright\arraybackslash}X 
+            | >{\raggedright\arraybackslash}X | }
+            \hline
+            \multicolumn{1}{|c|}{\textbf{Arduino}} & 
+            \multicolumn{1}{|c|}{\textbf{ESP32}} \\
+            \hline
+            \begin{enumerate}
+                \item Plug in the LED and potentiometer into the breadboard.
+                \item Connect a GND wire to the right side of the potentiometer and a 5V wire to the left side
+                \item Connect a wire from port A0 to the middle pin on the potentiometer
+                \item Connect a GND wire and a wire from port 9 correctly to the LED
+            \end{enumerate} &
+            \begin{enumerate}
+                \item Plug in the LED to port G23 and plug the potentiometer into the breadboard
+                \item Connect a GND wire to the left side of the potentiometer and a 5V wire to the right side
+                \item Connect a wire from port G12 to the middle pin on the potentiometer
+            \end{enumerate} \\
+            \hline
+        \end{tabularx}
+    \end{center}
+    \subsection*{Code (Serial Feedback):}
+        \begin{mdframed}[linewidth = 3, linecolor = turbo_purple]
+            \includegraphics[height = \codeHeight]{Assets/begin.png} \\
+            Starts serial communication with the computer \\ \\
+            \includegraphics[height = 14mm]{Assets/serial.png} \\ 
+            Displays the specified input to the monitor. Using ‘println’ creates a new line of text.
+        \end{mdframed}
 
-\newpage
-    \includegraphics[width = \diagramWidth]{Assets/serial_code.png} \\
-    Upload the code to the Arduino/ESP32 and open the serial monitor in the top right corner (red arrow). The values should resemble the following. Twist the potentiometer to change the value. \\
-    \includegraphics[width = \diagramWidth]{Assets/serial_monitor.png}
+    \newpage
+        \includegraphics[width = \diagramWidth]{Assets/serial_code.png} \\
+        Upload the code to the Arduino/ESP32 and open the serial monitor in the top right corner (red arrow). The values should resemble the following. Twist the potentiometer to change the value. \\
+        \includegraphics[width = \diagramWidth]{Assets/serial_monitor.png}
 
-\newpage
-\subsection*{Code (Dimming LED Arduino):}
-    \begin{mdframed}[linewidth = 3, linecolor = turbo_purple]
-        \includegraphics[height = \codeHeight]{Assets/aread.png} \\
-         This line reads for an incoming analog information (range of numbers) from a port. \\
-         \includegraphics[height = 8mm]{Assets/awrite.png} \\ 
-         This line sends a power value between 0 and 255 to the specified port. This line can be used to send a range of powers. \\
-         \includegraphics[height = 6mm]{Assets/map.png} \\
-         The map function takes in a value and checking its position in the larger range, rewrites its position in a lower range. After the number, the first two numbers are upper and lower bounds of the incoming number range (numbers above are only examples). The second two numbers are the output bounds. Visualisation for this example is shown below. \\
-         \includegraphics[scale = 0.3]{Assets/map_diagram.jpg}
-    \end{mdframed}
-    \includegraphics[width = \diagramWidth]{Assets/arduino_pot.png} \\
-    Upload the code to the Arduino and the LED should brighten when the knob is twisted.
+    \newpage
+    \subsection*{Code (Dimming LED Arduino):}
+        \begin{mdframed}[linewidth = 3, linecolor = turbo_purple]
+            \includegraphics[height = \codeHeight]{Assets/aread.png} \\
+            This line reads for an incoming analog information (range of numbers) from a port. \\
+            \includegraphics[height = 8mm]{Assets/awrite.png} \\ 
+            This line sends a power value between 0 and 255 to the specified port. This line can be used to send a range of powers. \\
+            \includegraphics[height = 6mm]{Assets/map.png} \\
+            The map function takes in a value and checking its position in the larger range, rewrites its position in a lower range. After the number, the first two numbers are upper and lower bounds of the incoming number range (numbers above are only examples). The second two numbers are the output bounds. Visualisation for this example is shown below. \\
+            \includegraphics[scale = 0.3]{Assets/map_diagram.jpg}
+        \end{mdframed}
+        \includegraphics[width = \diagramWidth]{Assets/arduino_pot.png} \\
+        Upload the code to the Arduino and the LED should brighten when the knob is twisted.
 
-\newpage
-\subsection*{Code (Dimming LED ESP32):}
+    \newpage
+    \subsection*{Code (Dimming LED ESP32):}
     \begin{mdframed}[linewidth = 3, linecolor = turbo_purple]
         \includegraphics[height = 8mm]{Assets/ledcsetup.png} \\
          This line is used to set up the properties of the PWM signal, and the channel it will run on. Resolution is how many bits are used for the signal (up to 16 bits). The ESP32 has 16 PWM channels and any GPIO can be used to output PWM using a channel. \\
@@ -348,112 +428,34 @@ The required software for these tutorials is Arduino IDE. To download the softwa
 
 \newpage
 
-\section*{Lesson 4: Ultrasonic Sensor}
-    \subsection*{What You'll Need:}
-        \begin{itemize}
-            \item Arduino/ESP32
-            \item Ultrasonic Sensor (HC-SR04)
-            \item 4 wires (male to female) (Arduino)
-            \item 4 wires (female to female) (ESP32)
-        \end{itemize}
-        \begin{mdframed}[linewidth = 3, linecolor = turbo_purple]
-            \textbf{Ultrasonic Sensor:} \\
-            The HC-SR04 ultrasonic sensor sends out a sound and measures the time taken for the to return. It uses this technique to measure distances from objects. Note it has difficulty sensing objects that absorb sound like foam. Though the ultrasonic gives a range of readings, digital ports may be used to read it. \\
-            \includegraphics[scale = 0.3]{Assets/Ultrasonic.jpg}
-        \end{mdframed}
-    \subsection*{Wiring Diagram:}
-        \includegraphics[width = \diagramWidth]{Assets/arduino_esp_ultrasonic.png}
+\section*{Lesson 4: Wireless Communication}
 
-\newpage
-    \subsection*{Directions:}
-        \begin{center}
-            \begin{tabularx}{\textwidth} { 
-                | >{\raggedright\arraybackslash}X 
-                | >{\raggedright\arraybackslash}X | }
-                \hline
-                \multicolumn{1}{|c|}{\textbf{Arduino}} & 
-                \multicolumn{1}{|c|}{\textbf{ESP32}} \\
-                \hline
-                \begin{enumerate}
-                    \item Connect the VCC to 5V and GND to GND. Connect the Trig pin to port 12, and connect the Echo pin to port 13
-                \end{enumerate} &
-                \begin{enumerate}
-                    \item Connect the VCC to V5 and GND to GND. Connect the Trig pin to port 23, and connect the Echo pin to port 22.
-                \end{enumerate} \\
-                \hline
-            \end{tabularx}
-        \end{center}
-    \subsection*{Code:}
-        \begin{mdframed}[linewidth = 3, linecolor = turbo_purple]
-            \includegraphics[height = \codeHeight]{Assets/include_u.png} \\
-            This is to introduce an ultrasonic library that does not come default with the software. It must be additionally downloaded. To do this, navigate to Tools -> Manage Libraries. In manage libraries, search for ultrasonic, and scroll to locate the indicated library. Once located, click install. When complete, restart the IDE, and the library should be in your Include Library as Ultrasonic. \\
-            \begin{center}
-                \includegraphics[width = \diagramWidth]{Assets/ultrasonic_library.png}
-            \end{center}
-            \includegraphics[height = 6mm]{Assets/ultrasonic_init.png} \\
-            This line creates an ultrasonic object. Type in the ports of the ultrasonic as indicated by Trig and Echo. \\
-            \includegraphics[height = 6mm]{Assets/ultrasonic_read.png} \\
-            This returns the value currently being read by the sensor.
-        \end{mdframed}
-    \newpage
-    \includegraphics[width = \diagramWidth]{Assets/ultrasonic_code.png} \\
-    \includegraphics[width = \diagramWidth]{Assets/ultrasonic_monitor.png} \\
-    Upload the code to the Arduino/ESP32 and open the Serial Monitor. The ultrasonic should be reading values as seen in the above Serial Monitor.
+\section*{Advanced: Program Microcontroller with C}
+
     
-\newpage
 
 \section*{References}
 
+        \begin{itemize}
+            \item (Paraphrase from OpenAI's ChatGPT AI language model, personal communication, March 25, 2023)
+        \end{itemize}
 
-%Change includegraphics logos and corresponding sponsor captions for our current sponsors
-%Remove any extra figures if more than required
+\section{Credits}
 
-\begin{figure}[!htb]
-    \captionsetup[subfigure]{labelformat=empty}
-     \centering
-        \begin{subfigure}[b]{0.3\textwidth}
-        \centering
-        \includegraphics[width=200]{Assets/Logo (Dark).png}
-        \caption{Sponsor 1}
-        \end{subfigure}
-     \hfill
-        \begin{subfigure}[b]{0.5\textwidth}
-        \centering
-        \includegraphics[width=200]{Assets/Logo (Dark).png}
-        \caption{Sponsor 2}
-        \end{subfigure}
-\end{figure}
+        \begin{itemize}
+            \item Binara Wasala
+            \begin{itemize}
+                \item "Required Software" section
+                \item "Overview of the Arduino and ESP32" section
+                \item "Lesson 1: Blinking an LED" section
+                \item "Lesson 2: LED with a button" section
+            \end{itemize}
+            \item Reuben Richardson
+            \begin{itemize}
+                \item "What Is A Microcontroller" \& "Hobby Microcontroller Options" sections
+                \item "Lesson 3: PWM Servo Motor Control" secton
+            \end{itemize}
+        \end{itemize}
 
-\begin{figure}[!htb]
-    \captionsetup[subfigure]{labelformat=empty}
-     \centering
-        \begin{subfigure}[b]{0.3\textwidth}
-        \centering
-        \includegraphics[width=200]{Assets/Logo (Dark).png}
-        \caption{Sponsor 1}
-        \end{subfigure}
-     \hfill
-        \begin{subfigure}[b]{0.5\textwidth}
-        \centering
-        \includegraphics[width=200]{Assets/Logo (Dark).png}
-        \caption{Sponsor 2}
-        \end{subfigure}
-\end{figure}
-
-\begin{figure}[!htb]
-    \captionsetup[subfigure]{labelformat=empty}
-     \centering
-        \begin{subfigure}[b]{0.3\textwidth}
-        \centering
-        \includegraphics[width=200]{Assets/Logo (Dark).png}
-        \caption{Sponsor 1}
-        \end{subfigure}
-     \hfill
-        \begin{subfigure}[b]{0.5\textwidth}
-        \centering
-        \includegraphics[width=200]{Assets/Logo (Dark).png}
-        \caption{Sponsor 2}
-        \end{subfigure}
-\end{figure}
 
 \end{document}
