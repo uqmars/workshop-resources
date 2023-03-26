@@ -60,7 +60,7 @@ node [inner sep=0,outer sep=0,above right]
         \vspace*{15mm}
         \includegraphics[width=0.7\paperwidth]{Assets/Logo (Dark).png} \\
         \vspace{1cm}
-        \Huge Arduino and ESP32 Sensors Workshop \\
+        \Huge Microcontroller Workshop \\
         \huge \textcolor{turbo_purple}{2023}
     \end{center}
     \vfill
@@ -178,7 +178,50 @@ The required software for these tutorials is Arduino IDE. To download the softwa
 
 \newpage
 
+\section*{Powering A Microcontroller} {
 
+    \subsection*{Arduino Input Voltage Range}
+        The voltage range of an Arduino board depends on the specific board model. 
+        However, most Arduino boards operate on a voltage range of 5V to 12V DC. 
+        Some newer boards, such as the Arduino Due, can operate on a wider range of voltages, from 7V to 20V DC.
+        Your laptop USB ports usually supply a well regulated logic-level voltage of 5V, so this 
+
+    \subsection*{Main Power Supply Voltage vs Logic-Level Power}
+        Arduino boards have two power input pins: the Vin pin and the 5V pin. 
+        The Vin pin is connected to the main power supply voltage, which can be in the range of 
+        5V to 12V or higher, depending on the board. The 5V pin, on the other hand, is connected 
+        to the logic-level power supply, which is usually 5V or 3.3V.
+
+        The main power supply voltage is used to power external components, such as sensors, 
+        motors, and other devices connected to the Arduino board. 
+        The logic-level power supply, on the other hand, is used to power the 
+        microcontroller and other digital components on the board.
+
+    \subsection*{Drivers and Shields}
+        Drivers and shields are add-on boards that are designed to extend the functionality of an 
+        Arduino board. Drivers are used to control motors, relays, and other high-power devices that 
+        require more current than the Arduino board can provide. Shields, on the other hand, are add-on 
+        boards that provide additional features, such as Wi-Fi connectivity, GPS, and LCD displays.
+        
+        Both drivers and shields may require a separate power supply, depending on the power requirements 
+        of the devices they are controlling. In some cases, they may also require level shifting circuitry 
+        to ensure that the signals sent between the Arduino board and the driver or shield are compatible. \\
+        
+        
+        \vspace{5mm}
+        \begin{itemize}
+            \item Sheilds Available at Jaycar: \\
+                \url{https://www.jaycar.com.au/search?text=sheild}
+            \item Motor Shield (Usefull for ENGG1100): \\
+            \url{https://www.jaycar.com.au/arduino-compatible-motor-servo-controller-module/p/XC4472}
+    
+        \end{itemize}
+        
+        \vspace{1cm}
+        \emph{(These items are usually significantly cheaper online - but JayCar is good in a pinch!)}
+        
+}
+\newpage
 
 \section*{Overview of the Arduino and ESP32}
     \begin{center}
@@ -360,79 +403,116 @@ The required software for these tutorials is Arduino IDE. To download the softwa
             \\
             \includegraphics[scale = 1]{Assets/servos.png}
         \end{mdframed}
+        \newpage
+        \begin{mdframed}[linewidth = 3, linecolor = turbo_purple]
+            \textbf{Pulse Width Modulation (PWM):}
+            \\
+            PWM: Pulse width modululation takes a digital signal (high or low) and rapidly switches the signal 
+            on and off. This technique is used to control the amount of power delivered to a load 
+            (Can be thought of as analog power). The duration of the on and off periods can determine 
+            the average power delivered to the load. This is creates a square wave signal, this 
+            signal can be described by its duty cycle and its period.  Where duty cycle is how 
+            much of the signal is on during one single period. 
+            \\
+            \includegraphics[scale = 1]{Assets/pwm1.jpg}
+        \end{mdframed}
     \subsection*{Wiring Diagram:}
-    \includegraphics[width = \diagramWidth]{Assets/arduino_esp_pot.png}
+        \includegraphics[width = \diagramWidth]{Assets/servoWiring.png}
     \newpage
     \subsection*{Directions:}
-    \begin{center}
-        \begin{tabularx}{\textwidth} { 
-            | >{\raggedright\arraybackslash}X 
-            | >{\raggedright\arraybackslash}X | }
-            \hline
-            \multicolumn{1}{|c|}{\textbf{Arduino}} & 
-            \multicolumn{1}{|c|}{\textbf{ESP32}} \\
-            \hline
-            \begin{enumerate}
-                \item Plug in the LED and potentiometer into the breadboard.
-                \item Connect a GND wire to the right side of the potentiometer and a 5V wire to the left side
-                \item Connect a wire from port A0 to the middle pin on the potentiometer
-                \item Connect a GND wire and a wire from port 9 correctly to the LED
-            \end{enumerate} &
-            \begin{enumerate}
-                \item Plug in the LED to port G23 and plug the potentiometer into the breadboard
-                \item Connect a GND wire to the left side of the potentiometer and a 5V wire to the right side
-                \item Connect a wire from port G12 to the middle pin on the potentiometer
-            \end{enumerate} \\
-            \hline
-        \end{tabularx}
-    \end{center}
-    \subsection*{Code (Serial Feedback):}
+        \begin{center}
+            \begin{tabularx}{\textwidth} { 
+                | >{\raggedright\arraybackslash}X 
+                | >{\raggedright\arraybackslash}X | }
+                \hline
+                \multicolumn{1}{|c|}{\textbf{Arduino}} & 
+                \multicolumn{1}{|c|}{\textbf{ESP32}} \\
+                \hline
+                \begin{enumerate}
+                    \item Instructions pending...
+                \end{enumerate}  &
+                \begin{enumerate}
+                    \item Connect the servos red wire to 5V, black wire to GND and the yellow wire to pin 12.
+                    \item Need to import ESP32Servo.h, this library will need to be downloaded from the ‘Library Manager’
+                    \item (servo).setPeriodHertz this sets the frequency at which the pwm signal occurs
+                    \item (servo).attach changes the corresponding pin to output a pwm signal
+                    \item (servo).write writes an angle for the PWM 
+                    \item More useful functions can be found through reading the documentation:
+                            \url{https://madhephaestus.github.io/ESP32Servo/classServo.html#a613aa8f5aa81971357e6ff36df92309d}
+                    
+                \end{enumerate} \\
+                \hline
+            \end{tabularx}
+            
+        \end{center}
+    \newpage
+    \subsection*{Code (ESP32):}
         \begin{mdframed}[linewidth = 3, linecolor = turbo_purple]
-            \includegraphics[height = \codeHeight]{Assets/begin.png} \\
-            Starts serial communication with the computer \\ \\
-            \includegraphics[height = 14mm]{Assets/serial.png} \\ 
-            Displays the specified input to the monitor. Using ‘println’ creates a new line of text.
+            \includegraphics[width = \diagramWidth]{Assets/servoCode.png}
         \end{mdframed}
-
     \newpage
-        \includegraphics[width = \diagramWidth]{Assets/serial_code.png} \\
-        Upload the code to the Arduino/ESP32 and open the serial monitor in the top right corner (red arrow). The values should resemble the following. Twist the potentiometer to change the value. \\
-        \includegraphics[width = \diagramWidth]{Assets/serial_monitor.png}
-
-    \newpage
-    \subsection*{Code (Dimming LED Arduino):}
-        \begin{mdframed}[linewidth = 3, linecolor = turbo_purple]
-            \includegraphics[height = \codeHeight]{Assets/aread.png} \\
-            This line reads for an incoming analog information (range of numbers) from a port. \\
-            \includegraphics[height = 8mm]{Assets/awrite.png} \\ 
-            This line sends a power value between 0 and 255 to the specified port. This line can be used to send a range of powers. \\
-            \includegraphics[height = 6mm]{Assets/map.png} \\
-            The map function takes in a value and checking its position in the larger range, rewrites its position in a lower range. After the number, the first two numbers are upper and lower bounds of the incoming number range (numbers above are only examples). The second two numbers are the output bounds. Visualisation for this example is shown below. \\
-            \includegraphics[scale = 0.3]{Assets/map_diagram.jpg}
-        \end{mdframed}
-        \includegraphics[width = \diagramWidth]{Assets/arduino_pot.png} \\
-        Upload the code to the Arduino and the LED should brighten when the knob is twisted.
-
-    \newpage
-    \subsection*{Code (Dimming LED ESP32):}
-    \begin{mdframed}[linewidth = 3, linecolor = turbo_purple]
-        \includegraphics[height = 8mm]{Assets/ledcsetup.png} \\
-         This line is used to set up the properties of the PWM signal, and the channel it will run on. Resolution is how many bits are used for the signal (up to 16 bits). The ESP32 has 16 PWM channels and any GPIO can be used to output PWM using a channel. \\
-         \includegraphics[height = 8mm]{Assets/ledcattach.png} \\ 
-         This line is used to assign a GPIO pin to a PWM channel. This will be where your PWM channel will output its signal. \\
-         \includegraphics[height = 8mm]{Assets/ledcwrite.png} \\ 
-         This function is essentially the same as the analogWrite() function. It’s used to write the duty cycle to the channel. The duty cycle takes a value between 0 and 100.  \\
-    \end{mdframed}
-    \includegraphics[width = \diagramWidth]{Assets/esp_pot.png} \\
-    Upload the code to the ESP32 and the LED should brighten as the potentiometer is twisted. 
 
 \newpage
 
 \section*{Lesson 4: Wireless Communication}
 
-\section*{Advanced: Program Microcontroller with C}
+    Wireless communication is essential for remotely operated devices/robotics.
+    Although not required, you are usually encouraged to use wireless 
+    communication in the ENGG1100 group projects. Wireless control may also come in handy in further
+    group projects such as ENGG2800 and METR2800. \\
+
+    Alternatively, many groups will also just use a long USB / serial cable to remotely operate their 
+    machine - yuck. After this tutorial you will hopefully gain the confidence to use 
+    wireless communication in your future projects and enjoy the benefits of a more flexible and reliable system. \\
+
+    For this lession we will obviously need a microcontroller with wireless cababilities. UQ MARS has supplied a limited number
+    of ESP32's. These are like cool little arduinos, but are faster, cheaper, have more memory and most importantly feature
+    WiFi (2.4 GHz) and bluetooth capabilites. Alternatively, with a couple of tweaks, you can also use an ESP8266 with this tutorial 
+    - ask one of our execs if you have any trouble. 
+    \textbf{Share one of the ESP32's with a buddy if there isn't enough to go around}.\\
+
+    FYI: JayCar sells ESP32's and various arduino WiFi products which use the ESP8266.
+
+
+    \subsection*{Overview}
+    We will need to set up a wireless communication link between your Arduino board and your computer.
+    This link is called a "TCP Socket" and it can be thought of as a 'virtual usb port'. A socket is identified using both an IP Address and a port number.
+     you can read more about them here: 
+    \url{https://www.howtouselinux.com/post/tcp-socket}. \\
+
+    In this lesson, we will configure the ESP32 to host its own wireless network (you can think of it like your phone's hotspot).
+    You will then connect your laptop to the ESP32's wireless network. Now that both devices are
+    on the same network - we can connect them using a socket (a virtual USB cable - if you like).\\
 
     
+    We will need to set up a "socket" on both ends of the connection:
+    \begin{itemize}
+        \item ESP32 - "Server" Socket
+        \item Computer (python script) - "Client" Socket
+    \end{itemize}
+
+    \newpage
+    \subsection*{Code (ESP32 - Server):}
+        \begin{mdframed}[linewidth = 3, linecolor = turbo_purple]
+            \includegraphics[width = \diagramWidth]{Assets/servoCode.png}
+        \end{mdframed}
+
+    \subsection*{Code (Python - Client):}
+        \begin{mdframed}[linewidth = 3, linecolor = turbo_purple]
+            \includegraphics[width = \diagramWidth]{Assets/servoCode.png}
+        \end{mdframed}
+
+
+
+    \newpage
+
+% \section*{Advanced: Program Microcontroller with C}
+
+% https://docs.espressif.com/projects/esp-idf/en/latest/esp32/
+
+% \newpage
+
+
 
 \section*{References}
 
@@ -440,7 +520,8 @@ The required software for these tutorials is Arduino IDE. To download the softwa
             \item (Paraphrase from OpenAI's ChatGPT AI language model, personal communication, March 25, 2023)
         \end{itemize}
 
-\section{Credits}
+
+\section*{Credits}
 
         \begin{itemize}
             \item Binara Wasala
@@ -453,7 +534,13 @@ The required software for these tutorials is Arduino IDE. To download the softwa
             \item Reuben Richardson
             \begin{itemize}
                 \item "What Is A Microcontroller" \& "Hobby Microcontroller Options" sections
-                \item "Lesson 3: PWM Servo Motor Control" secton
+                \item "Lesson 3: PWM Servo Motor Control" section
+                \item "Lesson 4: Wireless Communication" section
+            \end{itemize}
+            \item Hokul Srikantthan
+            \begin{itemize}
+                \item "Lesson 3: PWM Servo Motor Control" section
+                \item "Powering A Microcontroller" section
             \end{itemize}
         \end{itemize}
 
