@@ -1,1 +1,9 @@
 https://dl.espressif.com/dl/package_esp32_index.json
+
+
+USB DRIVER (WINDOWS):
+https://cdn.sparkfun.com/assets/learn_tutorials/8/4/4/CH341SER.EXE
+
+
+https://learn.sparkfun.com/tutorials/how-to-install-ch340-drivers/all#drivers-if-you-need-them
+
