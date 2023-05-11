@@ -19,7 +19,7 @@ def get_neighbors(maze, node):
             neighbors.append((new_row, new_col))
     return neighbors
 
-def dijkstra(img, maze, start):
+def dijkstra(img, maze, start, end):
     distances = np.ones_like(maze) * np.inf
     queue = deque([start])
     visited = set()
@@ -27,6 +27,8 @@ def dijkstra(img, maze, start):
     distances[start[0], start[1]] = 0.0
     while queue:
         current_node = queue.popleft()
+        if current_node == end:
+            break
         if current_node in visited:
             continue
         visited.add(current_node)
@@ -44,9 +46,13 @@ def dijkstra(img, maze, start):
                     path[neighbor] = current_node
                     queue.append(neighbor)
     
-    img_resize = cv.resize(img, (img.shape[0], img.shape[1]), interpolation=cv.INTER_NEAREST)
-    cv.imshow('maze', img_resize)
-    cv.waitKey()
+    node = end
+    path_list = [node]
+    while node != start:
+        node = path[node]
+        path_list.append(node)
+    path_list.reverse()
+    return path_list
 
 import heapq
 
@@ -62,7 +68,6 @@ def a_star(img, maze, start, end):
     distances[start[0], start[1]] = 0.0
     heapq.heappush(queue, (0, start))
     
-    shortest_path = []
     while queue:
         _, current_node = heapq.heappop(queue)
         if current_node == end:
@@ -113,7 +118,7 @@ def main():
     start = (r0, c0)
     end = (r1, c1)
     img[r1, c1, :] = np.array([255, 120, 120])
-    path_list = a_star(img, maze, start, end)
+    path_list = dijkstra(img, maze, start, end)
     for r, c in path_list:
         img[r, c, :] = np.array([80, 80, 255])
         img_resize = cv.resize(img, (800, 800), interpolation=cv.INTER_NEAREST)
