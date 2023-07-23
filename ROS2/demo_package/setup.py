@@ -21,6 +21,7 @@ setup(
     entry_points={
         'console_scripts': [
             "twist_talker = demo_package.demo_publisher:main",
+            "twist_listener = demo_package.demo_subscriber:main",
         ],
     },
 )
