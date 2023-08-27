@@ -1,5 +1,31 @@
 # ROS2 Detailed Notes
 
+# Prerequisites
+
+- Install Virtualbox before workshop / Ubuntu 22 + ROS
+- Ideally install and test vm before
+
+### VM Setup
+
+Download the [Virtual Machine Image](https://drive.google.com/drive/folders/1isxQ9GSXstkg4O_Vr5CWbhKsgZS0RCja?usp=drive_link) . This has ROS2 and gazebo.
+
+- Open Virtual Box
+- Go to file
+- Click Import appliance
+- Select the .ova file
+
+VM should be ready (double click on the VM)
+
+- PWD: uqmars USER: uqmars
+
+(optional) Install VM Guest Additions
+
+- Go to devices
+- Insert guest additions CD image
+- go /media/uqmars/VboxGA
+- sudo ./VboxGuestLinux
+- Reset our VM
+
 # Introduction
 
 ## What is ROS
@@ -20,9 +46,13 @@ source /opt/ros/humble/setup.bash
 
 Because this would be required every time we want to open a new terminal, we want to avoid this. Therefore, we can add this to the bashrc. This command can accomplish this, but we can edit the file manually too
 
-`echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc`
+`echo "source /opt/ros/humble/setup.bashecho "source /opt/ros/humble/setup.bash" >> ~/.bashrc" >> ~/.bashrc`
 
 We can now create a workspace, this is just a folder.
+
+```python
+mkdir -p ~/mars_ws/src
+```
 
 Before we proceed we can discuss the elements of a ROS2 system.
 
@@ -30,7 +60,7 @@ Before we proceed we can discuss the elements of a ROS2 system.
 
 In this tutorial we will discuss the basic elements of a ROS2 architecture. This diagram summarises it
 
-![Untitled](ROS2%20Detailed%20Notes%2075ead6f1897a42008d31465f9922be4a/Untitled.png)
+![Untitled](Untitled.png)
 
 - Node: A ROS2 Node is designed to be responsible for a single modular purpose. Think driving motors or sending sensor data.
   - These can communicate to other nodes via topics or services
@@ -54,11 +84,24 @@ ROS2 Packages are organisational units. These store executable and other tools u
 
 In this tute a package called `my_package` will be used to hold our code. Create a package with `ros2 pkg create my_package` inside of the `~/mars_ws/src/` directory.
 
+```python
+cd ~/mars_ws/src/
+ros2 pkg create my_package
+```
+
 This will create all of the files above
 
 ## Creating a Publisher
 
+The publisher is the element of the node that sends a message to a topic.
+
 We will put this inside the `~/mars_ws/src/my_package/my_package/` directory. All the solutions are on git
+
+```python
+touch my_publisher.py
+```
+
+Using a preferred editor, enter in the elements of a publisher.
 
 #Write the code with them
 
@@ -105,9 +148,9 @@ if __name__ == "__main__":
     main()
 ```
 
-Explain as u go
-
 ## Creating a Subscriber
+
+The subscriber receives information from a topic.
 
 Same as publisher except this has a callback function. What do I do when I receive a message:
 
@@ -144,9 +187,9 @@ if __name__ == "__main__":
     main()
 ```
 
-Explain as u go
-
 ### Modifying config files
+
+The config files dictate how ROS2 interacts with the executables.
 
 Modify `[setup.py](http://setup.py)` to
 
@@ -155,7 +198,7 @@ import os
 from glob import glob
 from setuptools import setup
 
-package_name = 'demo_package'
+package_name = 'my_package'
 
 setup(
     name=package_name,
@@ -183,25 +226,74 @@ setup(
 )
 ```
 
-Leave `setup.cfg` alone.
+Leave `setup.cfg` as default
 
-### Run the crap
+### Running the ROS2 python with the CLI
 
-`colcon build` in the `~/mars_ws` ros2 run shit
+Build the files
 
-But we gotta `.install` first
+```python
+cd ~/mars_ws/
+colcon build
+. install/setup.bash
+ros2 run my_package my_publisher
+```
+
+Open a new terminal
+
+```python
+cd ~/mars_ws/
+. install/setup.bash
+ros2 run my_package my_subscriber
+```
 
 ## Launch Files
 
-Runs multiple shit at same time
+Launch Files allow the execution of multiple nodes at the same time, among other useful features. The following represents a launch file:
 
-need to edit the [setup.py](http://setup.py) to make it
+```python
+cd ~/mars_ws/src/my_package
+mkdir launch
+cd launch
+touch my_launch.launch.py
+```
 
-put it in `launch` directory
+```python
+from ament_index_python import get_package_share_directory
+from launch import LaunchDescription
+from launch_ros.actions import Node
+
+def generate_launch_description():
+
+    # Create the command to launch the listener
+    start_listener = Node(
+        package="my_package",
+        executable="twist_listener",
+        name="twist_subsriber"
+    )
+
+    start_talker = Node(
+        package = "my_package",
+        executable = "twist_talker",
+        name = "twist_publisher"
+    )
+
+    ld = LaunchDescription()
+    ld.add_action(start_listener)
+    ld.add_action(start_talker)
+    return ld
+```
+
+```python
+cd ~/mars_ws
+colcon build
+. install/setup.bash
+ros2 launch my_package my_launch.launch.py
+```
 
 # Simulation
 
-Turtle bot 3 is good for testing this, need to install and run
+ROS2 also supports interaction with simulators such as Gazebo. Our code we just wrote can be tested on the turtlebot3 simulator.
 
 ```python
 sudo apt install ros-humble-turtlebot3*
@@ -215,4 +307,10 @@ export TURTLEBOT3_MODEL=burger
 	ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
 ```
 
-now run launch file
+now launch the publisher or the launch file.
+
+# For More Information:
+
+- [ROS2 Documentation](https://docs.ros.org/en/humble/index.html)
+- [Robotics Backend](https://roboticsbackend.com/) blogs
+- [Automatic Addison](https://automaticaddison.com/)
