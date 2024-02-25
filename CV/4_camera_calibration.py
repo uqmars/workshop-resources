@@ -24,20 +24,24 @@ while True:
     if not ret:
         break
 
-    gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
-    ret, corners = cv.findChessboardCorners(gray, (9, 6), None)
-
-    if ret:
-        objpoints.append(objp)
-        imgpoints.append(corners)
-
-        corners_draw = cv.cornerSubPix(gray, corners, (11, 11), (-1, -1), criteria)
-        cv.drawChessboardCorners(img, (9, 6), corners_draw, ret)
 
     cv.imshow('img', img)
     c = cv.waitKey(1)
     if c == ord('q'):
         break
+    if c == ord(' '):    
+        gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+        ret, corners = cv.findChessboardCorners(gray, (9, 6), None)
+    
+        if ret:
+            objpoints.append(objp)
+            imgpoints.append(corners)
+    
+            corners_draw = cv.cornerSubPix(gray, corners, (11, 11), (-1, -1), criteria)
+            cv.drawChessboardCorners(img, (9, 6), corners_draw, ret)
+            
+    cv.imshow('img', corners_draw)
+    cv.waitKey(1)
 
 ret, mtx, dist, rvecs, tvecs = cv.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
 
