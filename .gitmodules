@@ -1,0 +1,3 @@
+[submodule "micromouse/design-repo"]
+	path = micromouse/design-repo
+	url = git@github.com:uqmars/starter-micromouse.git
