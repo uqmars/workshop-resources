@@ -279,3 +279,7 @@ TSWLatexianTemp*
 *.hex
 *.o
 *.bin
+
+# DS Store
+.DS_Store
+*.npy
